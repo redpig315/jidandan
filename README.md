@@ -3,3 +3,5 @@
 希望大家一起学习提高
 # clrcard
 . 一个使用ibm_db对db2操作的列子，顺便复习了一下re 和sys的用法
+#GetSD.java
+. 一个使用java的jsch库的小程序
