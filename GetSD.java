@@ -34,22 +34,22 @@ public class GetSD {
 		String chkdate=null;
 	    
 		if (args.length < 6) {
-	        System.out.println("ÓÃ·¨£ºGetchk.jar ip port  username password remotedir localdir [chkdate]");
+	        System.out.println("ç”¨æ³•ï¼šGetchk.jar ip port  username password remotedir localdir [chkdate]");
 	    	System.exit(0);
 	    }
 		
 		if(args.length ==6){
-			 chkdate=ftp.getYesterday();; // È¡ÎÄ¼þÈÕÆÚ
-			 System.out.println("»ñÈ¡ "+chkdate+"ÈÕ ÍøÁªÊÕµ¥¶ÔÕËÎÄ¼þ...");
+			 chkdate=ftp.getYesterday();; // å–æ–‡ä»¶æ—¥æœŸ
+			 System.out.println("èŽ·å– "+chkdate+"æ—¥ ç½‘è”æ”¶å•å¯¹è´¦æ–‡ä»¶...");
 		}else
 		{
 			chkdate=args[6].trim();
-		    System.out.println("»ñÈ¡ "+chkdate+"ÈÕ ÍøÁªÊÕµ¥¶ÔÕËÎÄ¼þ...");
+		    System.out.println("èŽ·å– "+chkdate+"æ—¥ ç½‘è”æ”¶å•å¯¹è´¦æ–‡ä»¶...");
 		}
 		
 		
 		
-		String host = args[0].trim();
+	    String host = args[0].trim();
 	    int port = Integer.parseInt(args[1]);
 	    String username = args[2].trim();
 	    String password = args[3].trim();
@@ -65,7 +65,7 @@ public class GetSD {
 	    
 
         remotedir=remotedir+chkdate;
-		//Á¬½ÓÊý¾Ý¿â
+		//è¿žæŽ¥æ•°æ®åº“
 	    ChannelSftp sftp = ftp.connect(host, port, username, password);
 	    
 	     dirls=ftp.listFiles(remotedir, sftp);
