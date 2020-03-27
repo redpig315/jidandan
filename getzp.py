@@ -99,10 +99,11 @@ def  delcur(database,date):
 	print("删除总条数 :",conn.total_changes)
 
 
-#画图并保存
+#画图并保存，只显示前30条数据
 def get_data(database):
 	x=[]
 	y=[]
+	cnt=0
 	conn=sqlite3.connect(database)
 	c=conn.cursor()
 	sql="select location ,count(location) as a from zpinfo where location <>'' group by location  order by a desc"
@@ -110,6 +111,9 @@ def get_data(database):
 	for row in rows:
 		y.append(row[1])
 		x.append(row[0])
+		cnt=cnt+1
+		if cnt>30:
+			break
 	conn.close()
 	show_map(x,y)
 
@@ -120,7 +124,11 @@ def get_data(database):
 #统计一下信息地点，展示图片
 def show_map(x,y):
 	plt.rcParams['font.sans-serif'] = ['SimHei'] #显示中文
+	#plt.xticks([0,np.pi/2,np.pi,3*np.pi/2,2*np.pi],['0',r'$\frac{\pi}{2}$',r'$\pi$',r'$\frac{3\pi}{2}$',r'$2\pi$'], rotation=90)# 第一个参数是值，第二个参数是对应的显示效果(若无传入则默认直接显示原始数据)，第三个参数是标签旋转角度
+	plt.figure(figsize = (10,20)) 
 	plt.bar(x,y, label="招聘信息")
+	plt.xticks(rotation=-90)#标签倒置 
+	plt.xticks(fontsize = 8)#缩小字体方便查看
 	plt.legend()
 	plt.xlabel('城市')
 	plt.ylabel('招聘数量')
