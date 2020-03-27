@@ -7,6 +7,7 @@ import re
 import sqlite3
 import datetime
 import time
+import matplotlib.pyplot as plt
 
 headers={'User-Agent':"Mozilla/5.0 (Windows NT 6.1;WOW64) AppleWebKit/537.36(KHTML,like Gecko) Chrome/53.0.2785.143 Safari/537.36"}
 
@@ -50,6 +51,7 @@ def get_zpinfo(raw_text,filename,database):
 		print("++++++++++++++++")
 	print("========database insert $"+str(cnt)+"条")
 	save2file(filename,fullcontent)#把信息存入txt
+	get_data(database)
 
 #保存信息到文件
 def save2file(filename,content):
@@ -95,6 +97,37 @@ def  delcur(database,date):
 	c.execute(sql)
 	conn.commit()
 	print("删除总条数 :",conn.total_changes)
+
+
+#画图并保存
+def get_data(database):
+	x=[]
+	y=[]
+	conn=sqlite3.connect(database)
+	c=conn.cursor()
+	sql="select location ,count(location) as a from zpinfo where location <>'' group by location  order by a desc"
+	rows=c.execute(sql)
+	for row in rows:
+		y.append(row[1])
+		x.append(row[0])
+	conn.close()
+	show_map(x,y)
+
+
+
+
+
+#统计一下信息地点，展示图片
+def show_map(x,y):
+	plt.rcParams['font.sans-serif'] = ['SimHei'] #显示中文
+	plt.bar(x,y, label="招聘信息")
+	plt.legend()
+	plt.xlabel('城市')
+	plt.ylabel('招聘数量')
+	plt.title('银行招聘信息统计')
+	plt.show()
+
+
 
 #selector is #midder > div.ll > div > div:nth-child(4) > dl:nth-child(1) > dt > a
 if __name__ == '__main__':
