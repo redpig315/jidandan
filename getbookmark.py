@@ -15,6 +15,7 @@ except AttributeError:
     # no pyopenssl support used / needed / available
     pass
 
+#组装模板
 fpmark=open("d:/bookmars_sort.html",'w',encoding="utf8")
 
 fpmark.write("<!DOCTYPE NETSCAPE-Bookmark-file-1>\n")
@@ -34,8 +35,8 @@ fpmark.write("<DL><p>\n")
 
 
 
-
-fp=open("d:/bookmarks_2022_9_21.html",'r',encoding="utf8")
+#解析bookmark
+fp=open("d:/bookmarks_2022_9_18.html",'r',encoding="utf8")
 text=fp.read()
 fp.close()
 soup=BeautifulSoup(text,'lxml')
@@ -50,7 +51,7 @@ print("raw count:"+str(len(allmarked)))
 failed=0
 
 
-#,verify=False
+#判断bookmark是否有效
 for mark in allmarked:
 	#print(mark.text)
 	#print(mark.get('href'))
@@ -67,7 +68,7 @@ for mark in allmarked:
 print("p count:"+str(len(allmarked)-failed))
 
 
-
+#保存新bookmark
 fpmark.write("</DL><p>\n")
 
 fpmark.close()
